@@ -20,13 +20,12 @@ class leiningen::install($user) {
     group => $user,
     path => ["/bin", "/usr/bin", "/usr/local/bin"],
     cwd => "/home/$user/.bin",
-    command => "wget $exec && chmod 755 lein && ./lein",
+    command => "wget $exec && chmod 755 lein && HOME=/home/$user ./lein self-install",
     creates => ["/home/$user/.bin/lein",
                 "/home/$user/.lein"],
     require => [Class["java::install"],
                 File["create-local-bin"],
                 Package["wget"]],
   }
-
 }
 
